@@ -17,7 +17,6 @@
 {{-- Main Content --}}
 <div class="main">
     @include('includes.topbar')
-
     <main class="content">
         <div class="container-fluid p-0">
             <div class="row">
@@ -57,7 +56,6 @@
                         </div>
                     </div>
                 </div>
-
                 {{-- Right Content - 7/12 Column --}}
                 <div class="col-lg-7 col-md-7 col-sm-12">
                     @if($group->members()->where('user_id', auth()->id())->exists())
