@@ -77,7 +77,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 
-Route::prefix('api')->group(function () {
+// Follow/Unfollow Routes
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/profile/{username}', [ProfileController::class, 'show'])->name('api.profile.show');
     Route::post('/users/{user}/follow', [FollowerController::class, 'follow'])->name('api.users.follow');
     Route::post('/users/{user}/unfollow', [FollowerController::class, 'unfollow'])->name('api.users.unfollow');
@@ -97,7 +98,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/learning-resources/seller/{username}', [LearningResourceController::class, 'userResources'])->name('api.learning-resources.user');
     Route::get('/learning-resources/edit-resource/{id}', [LearningResourceController::class, 'editResource'])->name('api.learning-resources.edit');
 });
-
 
 // Admin routes
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
@@ -171,7 +171,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     
-
     Route::get('/groups', [GroupController::class, 'index'])->name('api.groups.index');
     Route::get('/groups/create', [GroupController::class, 'creategroup'])->name('api.group.create');
     Route::post('/groups', [GroupController::class, 'store'])->name('api.groups.store');

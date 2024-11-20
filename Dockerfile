@@ -18,3 +18,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Clear cache and install dependencies
 RUN composer clear-cache
 RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs
+
+# Install PostgreSQL extension
+RUN apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo pdo_pgsql
+
