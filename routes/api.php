@@ -27,8 +27,8 @@ use App\Http\Controllers\Api\AdminMessageController;
 use App\Http\Controllers\Api\HelpCenterController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-use App\Http\Controllers\API\GroupController;
-use App\Http\Controllers\API\GroupPostController;
+use App\Http\Controllers\Api\GroupController;
+use App\Http\Controllers\Api\GroupPostController;
 
 
 // Authentication routes
@@ -51,13 +51,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'showOwn'])->name('api.profile.showOwn');
     Route::get('/profile/edit-profile', [ProfileController::class, 'edit'])->name('api.profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('api.profile.update');
-    
-    
+
+
     // Allow GET and POST for feeds
     Route::match(['get', 'post'], '/feed', [FeedController::class, 'feeds'])->name('api.feed');
-    
+
     Route::post('/comment', [CommentController::class, 'store'])->name('api.comment.store');
-    
+
        // Post, Like, and Repost Routes
        Route::post('/post/{id}/like', [LikeController::class, 'likePost'])->name('api.post.like');
        Route::post('/post/{id}/unlike', [LikeController::class, 'unlikePost'])->name('api.post.unlike');
@@ -66,10 +66,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
        Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('api.posts.destroy');
 
     Route::post('/live-classes', [LiveClassController::class, 'store'])->name('api.live-classes.store');
-    
+
     Route::get('/notifications', [NotificationsController::class, 'index'])->name('api.notifications.index');
     Route::delete('/notifications/{id}', [NotificationsController::class, 'destroy'])->name('api.notifications.destroy');
-    
+
     Route::post('/messages', [MessageController::class, 'store'])->name('api.messages.store');
     Route::get('/help-center', [HelpCenterController::class, 'index'])->name('api.help-center');
     Route::get('/settings', [SettingsController::class, 'index'])->name('api.settings.index');
@@ -123,31 +123,31 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // Route to get list of all content
         Route::get('/', [TbookeLearningController::class, 'index'])->name('api.tbooke-learning.index');
-        
+
         // Route to store new content
         Route::post('/', [TbookeLearningController::class, 'store'])->name('api.tbooke-learning.store');
-        
+
         // Route to create content
         Route::get('/create', [TbookeLearningController::class, 'index'])->name('api.tbooke-learning.create');
-        
+
         // Route to show specific content by slug
         Route::get('/{slug}', [ContentController::class, 'show'])->name('api.content.show');
-        
+
         // Route to update specific content by ID
         Route::put('/creator/{id}', [TbookeLearningController::class, 'update'])->name('api.tbooke-learning.update');
-        
+
         // Route to delete specific content by ID and username
         Route::delete('/creator/{username}/delete/{id}', [TbookeLearningController::class, 'deleteContent'])->name('api.tbooke-learning.delete');
-        
+
         // Route to edit specific content by username and ID
         Route::get('/creator/{username}/edit/{id}', [TbookeLearningController::class, 'editContent'])->name('api.tbooke-learning.edit');
-        
+
         // Route to get user-specific content by username
         Route::get('/creator/{username}', [TbookeLearningController::class, 'userContents'])->name('api.tbooke-learning.user');
-        
+
     });
 
-    
+
     Route::prefix('groups')->group(function () {
         // Group Routes
         Route::get('/', [GroupController::class, 'index'])->name('api.groups.index'); // Fetch all groups
@@ -160,7 +160,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{group:slug}', [GroupController::class, 'destroy'])->name('api.groups.destroy'); // Delete a group
         Route::get('/groups/{slug}/posts', [GroupPostController::class, 'index'])->name('api.group.posts.index');
 
-        
+
         // Group Post Routes
         Route::prefix('{slug}')->group(function () {
             Route::post('/posts', [GroupPostController::class, 'store'])->name('api.group.posts.store'); // Store a new post in the group
@@ -170,7 +170,7 @@ Route::middleware('auth:sanctum')->group(function () {
         });
     });
 
-    
+
     Route::get('/groups', [GroupController::class, 'index'])->name('api.groups.index');
     Route::get('/groups/create', [GroupController::class, 'creategroup'])->name('api.group.create');
     Route::post('/groups', [GroupController::class, 'store'])->name('api.groups.store');
@@ -189,7 +189,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('tbooke-learning')->group(function () {
         Route::get('/live-classes', [LiveClassController::class, 'liveClasses'])->name('tbooke-live-classes.index');
     });
-    
+
     // Creator Live Classes Routes
     Route::prefix('live-classes')->group(function () {
         Route::get('/', [LiveClassController::class, 'creatorClasses'])->name('live-classes.index');
