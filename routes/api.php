@@ -31,6 +31,7 @@ use App\Http\Controllers\Api\GroupController;
 use App\Http\Controllers\Api\GroupPostController;
 
 
+Route::prefix('api')->namespace('Api')->group(function () {
 // Authentication routes
 Route::middleware('guest')->group(function () {
     // Allow GET and POST for registration
@@ -219,4 +220,5 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [SchoolController::class, 'store'])->name('api.schools.store'); // Store new school
         Route::get('/{school:slug}', [SchoolController::class, 'show'])->name('api.schools.show'); // Show specific school details
     });
+});
 });
