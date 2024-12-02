@@ -27,6 +27,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\GroupPostController;
 use App\Models\LearningResource;
 use App\Models\School;
+use App\Http\Controllers\SubscriptionController;
 
 Route::get('/', function () {
     if (auth()->check()) {return redirect('/feed');  }
@@ -47,14 +48,14 @@ Route::get('/privacy-policy', function () {return view('privacy-policy'); });
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // Authenticated routes
-    
+
     Route::get('/profile/edit-profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile', [ProfileController::class, 'showOwn'])->name('profile.showOwn');
     Route::get('/profile/{username}', [ProfileController::class, 'show'])->name('profile.show');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/feed', [FeedController::class, 'feeds'])->name('feed');
     Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
-    
+
     Route::get('/live-classes', [LiveClassController::class, 'creatorClasses'])->name('live-classes.index');
     Route::get('/live-classes/create', [LiveClassController::class, 'create'])->name('live-classes.create');
     Route::post('/live-classes', [LiveClassController::class, 'store'])->name('live-classes.store');
@@ -83,20 +84,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('learning-resources/{slug}', [LearningResourceController::class, 'show'])->name('learning-resources.show');
     Route::get('/learning-resources', [LearningResourceController::class, 'tbookeResources'])->name('learning-resources');
     Route::post('/learning-resources', [LearningResourceController::class, 'store'])->name('learning-resources.store');
-    
+
 
     Route::post('/users/{user}/follow', [FollowerController::class, 'follow'])->name('users.follow');
     Route::post('/users/{user}/unfollow', [FollowerController::class, 'unfollow'])->name('users.unfollow');
     Route::post('/notifications/read', [NotificationsController::class, 'markAsRead'])->name('notifications.markAsRead');
     Route::post('/message-notifications/read', [NotificationsController::class, 'messagesmarkAsRead'])->name('notifications.messagesmarkAsRead');
-    
+
     Route::post('/post/{id}/like', [LikeController::class, 'likePost'])->name('post.like');
     Route::post('/post/{id}/unlike', [LikeController::class, 'unlikePost'])->name('post.unlike');
     Route::post('/posts/{post}/repost', [PostController::class, 'repostPost'])->name('posts.repost');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
- 
+
     Route::get('/schools-corner/create', [SchoolController::class, 'create'])->name('schools.create');
     Route::get('/schools-corner', [SchoolController::class, 'SchoolsCorner'])->name('schools-corner');
     Route::post('/schools-corner', [SchoolController::class, 'store'])->name('schools.store');
@@ -112,7 +113,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/tbooke-blueboard/store', [TbookeBlueboardController::class, 'store'])->name('blueboard.store');
     Route::get('/tbooke-blueboard/{username}', [TbookeBlueboardController::class, 'userPosts'])->name('blueboard.userPosts');
     Route::delete('/blueboard/{id}/delete', [TbookeBlueboardController::class, 'destroy'])->name('blueboard.delete');
-    
+
     Route::get('/tbooke-blueboard/{username}/edit/{id}', [TbookeBlueboardController::class, 'edit'])->name('blueboard.edit');
     Route::put('/tbooke-blueboard/{username}/edit/{id}', [TbookeBlueboardController::class, 'update'])->name('blueboard.update');
 
@@ -129,7 +130,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
     Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
-    
+
     Route::get('/admin-messages', [AdminMessageController::class, 'index'])->name('admin-messages.index');
     Route::get('admin-messages/{messageId?}', [AdminMessageController::class, 'index'])->name('admin-messages.show');
     Route::post('/messages/store', [AdminMessageController::class, 'store'])->name('admin-messages.store');
@@ -138,18 +139,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/help-center', [HelpCenterController::class, 'index'])->name('help-center');
 
     // Group routes
-    
+
     Route::get('/groups/my-groups', [GroupController::class, 'myGroups'])->name('groups.myGroups');
-    Route::get('/groups', [GroupController::class, 'index'])->name('groups.index'); 
-    Route::get('/groups/create', [GroupController::class, 'creategroup'])->name('group.create'); 
-    Route::post('/groups', [GroupController::class, 'store'])->name('groups.store'); 
+    Route::get('/groups', [GroupController::class, 'index'])->name('groups.index');
+    Route::get('/groups/create', [GroupController::class, 'creategroup'])->name('group.create');
+    Route::post('/groups', [GroupController::class, 'store'])->name('groups.store');
     Route::get('/groups/{slug}', [GroupController::class, 'show'])->name('groups.show');
     Route::post('/groups/{group:slug}/join', [GroupController::class, 'join'])->name('groups.join');
     Route::get('/groups/{slug}/edit', [GroupController::class, 'edit'])->name('groups.edit');
     Route::delete('/groups/{slug}', [GroupController::class, 'destroy'])->name('groups.destroy');
     Route::put('/groups/{slug}', [GroupController::class, 'update'])->name('groups.update');
-    
-    
+
+
     // Group post routes
     Route::post('groups/{slug}/posts', [GroupPostController::class, 'store'])->name('group.posts.store');
     Route::post('groups/{post}/comment', [GroupController::class, 'storeComment'])->name('group.posts.comment');
@@ -157,16 +158,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('groups/{post}/repost', [GroupController::class, 'repostPost'])->name('group.posts.repost');
 
 
+    Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscriptions.index');
+    Route::get('/subscriptions/create/{categoryId}', [SubscriptionController::class, 'create'])->name('subscriptions.create');
+    Route::post('/subscriptions', [SubscriptionController::class, 'store'])->name('subscriptions.store');
+    Route::get('/subscriptions/{id}', [SubscriptionController::class, 'show'])->name('subscriptions.show');
+    Route::patch('/subscriptions/{id}/update-payment', [SubscriptionController::class, 'updatePayment'])->name('subscriptions.updatePayment');
+    Route::delete('/subscriptions/{id}/cancel', [SubscriptionController::class, 'cancel'])->name('subscriptions.cancel');
+
+
+
 });
 
     // Admin routes
     Route::get('/admin-login', [AdminController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/admin-login', [AdminController::class, 'login'])->name('admin.login.submit');
-    Route::post('/admin-logout', [AdminController::class, 'logout'])->name('admin.logout'); 
+    Route::post('/admin-logout', [AdminController::class, 'logout'])->name('admin.logout');
 
     Route::middleware([AdminAuth::class])->group(function () {
     Route::get('/admin-panel', [AdminController::class, 'index'])->name('admin.admin-panel');
-    
+
     Route::get('/admin-panel/user-subjects', [SubjectController::class, 'userSubjects'])->name('user.subjects');
     Route::post('/subjects', [SubjectController::class, 'store'])->name('subjects.store');
     Route::put('/subjects/{id}', [SubjectController::class, 'update'])->name('subjects.update');

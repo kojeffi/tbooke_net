@@ -77,7 +77,7 @@ class TbookeBlueboardController extends Controller
         return view('tbooke-blueboard.edit', compact('post', 'username', 'user'));
     }
 
-    
+
 
     public function destroy($id)
     {
@@ -117,8 +117,8 @@ class TbookeBlueboardController extends Controller
         return redirect()->route('blueboard.userPosts', $username);
     }
 
-    
-    
+
+
 
 }
 
