@@ -1,0 +1,15 @@
+It will be possible to do subscriptions on the service.
+
+The subcriptions will be paid for via MPESA
+
+The main focus is to deal with micro subscriptions that can expire in like one hour or so. and set the amounts
+    these will be configured in the admin side
+    Name
+    small Description
+    Expiry in seconds
+
+When a user subscribes:
+- They will pick a subscription.
+- The user id will be recorded.
+- payment if paid
+- payment transaction
