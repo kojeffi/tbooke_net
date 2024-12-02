@@ -114,6 +114,11 @@ return [
     | confirmation screen. By default, the timeout lasts for three hours.
     |
     */
+    'api'=>[
+    
+       'driver' => 'sanctum',
+       'provider' => 'users',
+     ],
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 

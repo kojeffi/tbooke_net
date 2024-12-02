@@ -1,7 +1,7 @@
 @include('includes.header')
 	
 	{{-- Topbar --}}
-	<div class="main">
+	<div class="main" style="background-color: #088484;color: #fff;">
 			{{-- Main Content --}}
 			<main class="content" style="padding-top: 1rem !important;">
                <div class="container-fluid p-0">
@@ -11,7 +11,7 @@
                             </a>
                             <div style="float: right" class="buttons">
                                 <a href="/login" class="btn about-btn">Login</a>
-                                <a href="/register" class="btn about-btn">Register</a>
+                                <a href="/register" class="btn about-btn">Create Account</a>
                             </div>
                         </div>
                         <div class="row about-rows">

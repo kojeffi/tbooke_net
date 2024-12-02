@@ -23,7 +23,7 @@ class GroupPostController extends Controller
         // Validate the request
         $request->validate([
             'content' => 'required|string',
-            'media' => 'nullable|file|mimes:jpg,jpeg,png,mp4,mov,avi|max:20480', // Adjust media rules as needed
+            'media' => 'nullable|file|mimes:jpg,jpeg,png,mp4,mov,avi,webm|max:20480', // Adjust media rules as needed
         ]);
     
         // Create the post

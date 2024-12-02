@@ -3,12 +3,11 @@
           <i class="hamburger align-self-center"></i>
         </a>
 				<div class="navbar-collapse collapse">
-				    <div>
-						<input type="text" id="search" name="search" class="form-control" placeholder="Search Posts">
-				
+		        @if(request()->routeIs('feed')) 
+				<div><input type="text" id="search" name="search" class="form-control" placeholder="Search Posts">
 					<div id="display" class="list-group"></div>
-
-</div>
+                   </div>
+				@endif
 					<ul class="navbar-nav navbar-align">
 					{{-- New Connection --}}
 						 <li class="nav-item">

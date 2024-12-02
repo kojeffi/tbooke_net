@@ -22,7 +22,7 @@ class PostController extends Controller
             // Validate post data
             $validatedData = $request->validate([
                 'content' => 'nullable|string',
-                'media_path.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4,mov,avi,wmv',
+                'media_path.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4,mp3,webm,mov,avi,wmv,wav',
             ]);
 
             $post = new Post();
