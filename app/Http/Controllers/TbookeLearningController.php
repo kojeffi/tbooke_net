@@ -42,7 +42,7 @@ class TbookeLearningController extends Controller
             'content_title' => 'required|string|max:255',
             'content_category' => 'required|array',
             'content' => 'required|string',
-            'media_files.*' => 'nullable|mimes:jpg,jpeg,png,bmp,gif,svg,pdf,doc,docx,ppt,pptx,mp4|max:10000',
+            'media_files.*' => 'nullable|mimes:jpg,jpeg,png,bmp,gif,svg,pdf,doc,docx,ppt,pptx,mp4|max:1000000',
         ]);
     
         // Handle thumbnail upload (if provided)
